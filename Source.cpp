@@ -4,6 +4,8 @@ using namespace std;
 
 //Write a program which allows the user to decide how big of an array he wants to make(use new command).Then, access the array using pointer arithmetic(not []).Allow him to enter student grades to the array.Then print the array contents.Print the average grade.Do this by writing separate function such as printArrayand calculateAverage.In these functions you will pass the array as a parameter(i.e. using*).
 
+// making changes from laptop
+
 class Student
 {
 public:
