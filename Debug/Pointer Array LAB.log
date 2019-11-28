@@ -1,4 +1,2 @@
 ﻿  Source.cpp
-C:\Users\Veritas\Desktop\Pointer Array LAB\Source.cpp(80,13): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-C:\Users\Veritas\Desktop\Pointer Array LAB\Source.cpp(84,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
-  Pointer Array LAB.vcxproj -> C:\Users\Veritas\Desktop\Pointer Array LAB\Debug\Pointer Array LAB.exe
+  Pointer Array LAB.vcxproj -> C:\Users\Caleb\Pointer-Array-LAB\Debug\Pointer Array LAB.exe

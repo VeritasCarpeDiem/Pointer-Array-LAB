@@ -1,28 +1,38 @@
 #include <iostream>
 
-using namespace std;
-
-//Write a program which allows the user to decide how big of an array he wants to make(use new command).Then, access the array using pointer arithmetic(not []).Allow him to enter student grades to the array.Then print the array contents.Print the average grade.Do this by writing separate function such as printArrayand calculateAverage.In these functions you will pass the array as a parameter(i.e. using*).
-
-// making changes from laptop
-
 class Student
 {
-public:
-	int* gradesArray;
-	int size;// {} = member intializer = initializing to 0
+private: // it's standard to keep things like variables private
+	int* grades;
+	int size;
 	double averageGrade;
-	//int count = 0;
 
+public: /* functions here */
 	Student(); // constructor
-	Student(int s);
+	Student(int s); // this is not used; it's soley to give an example of function overloading
+	void getSize(); // asks user for the size of the array
+	void getGrades(); // fills grades with values from the user
+	void getAverageGrade();
+	void printGrades();
+	~Student(); // destructor for Student (executes when the instance of Student dies)
 };
 
+int main()
+{
+	Student s; // this is where the default constructor is called
+
+	s.getSize();
+	s.getGrades();
+	s.getAverageGrade();
+	s.printGrades();
+
+	std::cin.get(); // used to pause the console without "System("pause")"
+}
+
 Student::Student()
-	: size(0), averageGrade(0.0), gradesArray(nullptr) // member initializer list
+	: size(0), averageGrade(0.0), grades(nullptr) // member initializer list
 {
 	// what I want to be done when an instance of Student has been created
-	std::cout << "Inside default constructor.\n\n";
 }
 
 /*
@@ -31,94 +41,56 @@ Student::Student()
 */
 
 Student::Student(int s) // overloaded constructor 
-	: size(s), averageGrade(0.0), gradesArray(nullptr)
+	: size(s), averageGrade(0.0), grades(nullptr)
 {
 	std::cout << "Inside overloaded constructor.\n\n";
 }
 
-
-int getSizeOfArray(Student* temp)
+void Student::getSize()
 {
-	cout << "Enter size of array: ";
-	cin >> temp->size;
-	return temp->size;
+	std::cout << "Enter amount of grades: ";
+
+	// this function has access to size because it is apart of the Student class
+	std::cin >> size;
+	grades = new int[size];
 }
 
-void enterGrades(Student* temp)
+void Student::getGrades()
 {
-	///*int * tempArray= new int[temp->count+1];
+	std::cout << "Enter grades: \n";
 
-	//for (int i = 0; i < temp->count; i++)
-	//{
-	//	tempArray[i] = temp->gradesArray[i];
-	//}
-	//delete[] temp->gradesArray;*/
-
-	//temp->gradesArray = tempArray;
-
-	temp->gradesArray = new int[temp->size];
-
-	for(int i = 0; i < temp->size; i++)
+	for (int i = 0; i < size; i++)
 	{
-		cout << "Enter grade #" << i + 1 << ": ";
-		cin >> *(temp->gradesArray + i);
+		std::cout << i + 1 << ". ";
+		std::cin >> *(grades + i);
 	}
-
+	std::cout << std::endl;
 }
 
-void printGradeArray(Student temp)
+void Student::getAverageGrade()
 {
-	cout << "Here are your " << temp.size << " total grades: ";
-	for(int i = 0; i < temp.size; i++)
-	{
-		cout << *(temp.gradesArray + i);
+	int sum = 0;
 
-		if(i == temp.size - 1)
-		{
-			cout << " ";
-			break;
-		}
+	for (int i = 0; i < size; i++)
+		sum += *(grades + i);
+
+	averageGrade = (double)sum / (double)size; // have to cast sum and size to double to prevent integer truncating
+}
+
+void Student::printGrades()
+{
+	std::cout << "Grades: ";
+	for (int i = 0; i < size; i++)
+	{
+		if (i < size - 1) // this is just to print commas only till the last number
+			std::cout << *(grades + i) << ", ";
 		else
-		{
-			cout << ", ";
-		}
+			std::cout << *(grades + i);
 	}
-	cout << endl;
+	std::cout << "\nAverage: " << averageGrade << std::endl;
 }
 
-int getAverageGrade(Student* temp)
+Student::~Student()
 {
-	int gradeSum = 0;
-
-	for(int i = 0; i < temp->size; i++)
-	{
-		gradeSum = gradeSum + *(temp->gradesArray + i);
-		//temp->gradesArray[i]
-	}
-
-	cout << "Your average Grade is: ";
-
-	temp->averageGrade = (gradeSum * 1.0) / temp->size;
-
-
-	cout << temp->averageGrade;
-
-	return temp->averageGrade;
-}
-
-void main()
-{
-	Student temp; // this is where the default constructor is called
-
-	int size = 10;
-	Student s0(size); // this is calling the overloaded vers. of the Student constructor
-
-	temp.size = getSizeOfArray(&temp); //get size of array from student input
-
-	enterGrades(&temp);
-
-	printGradeArray(temp);
-	getAverageGrade(&temp);
-	delete[] temp.gradesArray;
-
+	delete[] grades;
 }
